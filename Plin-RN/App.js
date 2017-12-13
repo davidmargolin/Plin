@@ -1,6 +1,6 @@
 import React from 'react';
-import HomeScreen from './Pages/HomeScreen'
-import ProfileScreen from './Pages/ProfileScreen'
+import HomeScreen from './Pages/HomeScreen';
+import ProfileScreen from './Pages/ProfileScreen';
 import { StackNavigator } from 'react-navigation';
 
 

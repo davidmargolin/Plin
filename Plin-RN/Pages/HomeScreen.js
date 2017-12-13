@@ -1,11 +1,12 @@
 import React from "react";
+import MapComponent from './MapComponent';
 import {StyleSheet, Text, View} from "react-native";
 
 export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Home Screen!!</Text>
+                <MapComponent />
             </View>
         );
     }
