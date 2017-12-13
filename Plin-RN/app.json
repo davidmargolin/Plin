@@ -1,5 +1,22 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "sdkVersion": "23.0.0",
+    "ios": {
+      "bundleIdentifier": "com.iter.schedmap",
+      "publishBundlePath": "ios/plin-rn/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/plin-rn/Supporting/shell-app-manifest.json"
+    },
+    "android": {
+      "package": "com.iter.schedmap"
+    },
+    "name": "Plin-RN",
+    "slug": "plin-rn",
+    "version": "0.1.0",
+    "isDetached": true,
+    "detach": {
+      "scheme": "exp0f1cda88510b4434a89cddbfa3c6c89b",
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.1.4-sdk23.0.0-f67c5bc3-4a27-40f6-8686-91e8f868a145.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.1.2-sdk23.0.0-d47f172b-1ed3-4c8f-9e48-239052c678b6.tar.gz"
+    }
   }
 }
