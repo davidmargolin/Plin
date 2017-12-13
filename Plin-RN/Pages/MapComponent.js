@@ -1,5 +1,6 @@
 import React from 'react';
 import MapView from 'react-native-maps';
+import { StyleSheet } from 'react-native';
 
 export default class MapComponent extends React.Component {
 	render() {
@@ -15,3 +16,5 @@ export default class MapComponent extends React.Component {
 		)
 	}
 }
+
+
