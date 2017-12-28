@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "jest-expo": "23.0.0",
+    "jest-expo": "^24.0.0",
     "react-test-renderer": "16.0.0"
   },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "web": "react-native start --port 9000",
     "test": "node node_modules/jest/bin/jest.js --watch",
     "android": "react-native run-android",
     "ios": "react-native run-ios"
@@ -16,9 +17,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^23.0.4",
+    "expo": "^24.0.0",
     "react": "16.0.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
+    "react-native-calendar-events": "^1.4.3",
+    "react-native-floating-action": "^1.5.0",
     "react-native-maps": "^0.18.3",
     "react-navigation": "^1.0.0-beta.21"
   }
