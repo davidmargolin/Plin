@@ -2,6 +2,7 @@ package com.iter.schedmap;
 
 import android.os.Bundle;
 
+import com.calendarevents.CalendarEventsPackage;
 import com.facebook.react.ReactPackage;
 
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ import com.iter.schedmap.generated.ExponentBuildConstants;
 import host.exp.expoview.ExponentActivity;
 
 public class MainActivity extends ExponentActivity {
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    CalendarEventsPackage.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  }
 
   @Override
   public String publishedUrl() {
