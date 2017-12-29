@@ -1,14 +1,15 @@
 import React from 'react';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {StyleSheet} from 'react-native';
 import TaskList from "./TaskList";
+import { mapStyles } from "./MapStyles";
 
 export default class Map extends React.Component {
 	render() {
 		return (
             <MapView
-                style={styles.map}
-                region={default_location}>
+                region={default_location}
+                customMapStyle={mapStyles}>
                 {this.props.events.map(function(event){
                     return <MapView.Marker
                         key={event.key}
@@ -43,4 +44,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
