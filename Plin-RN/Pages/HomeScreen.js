@@ -8,7 +8,6 @@ import RNCalendarEvents from 'react-native-calendar-events';
 
 export default class HomeScreen extends React.Component {
     // hides navigation bar
-    static navigationOptions = { title: 'EventMap', header: null };
 
     constructor(props) {
         super(props);
@@ -23,6 +22,7 @@ export default class HomeScreen extends React.Component {
     componentWillMount(){
         // get all calendars
         // for calendar, get events for day
+        // sort into tasks for events that happen at the same location
         // add pins
         RNCalendarEvents.authorizationStatus()
             .then(status => {
@@ -56,6 +56,7 @@ export default class HomeScreen extends React.Component {
                     event={this.state.event}
                 />
                 <Fab
+                    navigation={this.props.navigation}
                     adder={this.addEvent.bind(this)}
                 />
             </View>
@@ -68,17 +69,28 @@ let fake_events = [
         key: "key1",
         coordinate: {latitude: 40.7128, longitude: -74.0060},
         title: "event 1",
-        description: "event 1 desc"
+        description: "event 1 desc",
+        tasks: [{
+            title: '1 Task A'
+        },{
+            title: '1 Long Task B'
+        },]
     },{
         key: "key2",
         coordinate: {latitude: 40.6828, longitude: -74.0000},
         title: "event 2",
-        description: "event 2 desc"
+        description: "event 2 desc",
+        tasks: [{
+            title: '2 Long Task A'
+        },]
     },{
         key: "key3",
         coordinate: {latitude: 40.7148, longitude: -74.0080},
         title: "event 3",
-        description: "event 3 desc"
+        description: "event 3 desc",
+        tasks: [{
+            title: '3 Task A'
+        },]
     },
 ];
 

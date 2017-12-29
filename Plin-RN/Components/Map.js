@@ -1,6 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 import {StyleSheet} from 'react-native';
+import TaskList from "./TaskList";
 
 export default class Map extends React.Component {
 	render() {
@@ -12,9 +13,15 @@ export default class Map extends React.Component {
                     return <MapView.Marker
                         key={event.key}
                         coordinate={event.coordinate}
-                        title={event.title}
-                        description={event.description}
-                    />;
+                    >
+                        <MapView.Callout
+                            tooltip={true}
+                        >
+                            <TaskList
+                                tasks={event.tasks}
+                            />
+                        </MapView.Callout>
+                    </MapView.Marker>;
                 })}
             </MapView>
 		)
