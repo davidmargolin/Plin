@@ -8,6 +8,7 @@ export default class Map extends React.Component {
 	render() {
 		return (
             <MapView
+                style={styles.map}
                 region={default_location}
                 customMapStyle={mapStyles}>
                 {this.props.events.map(function(event){
@@ -44,3 +45,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
+
+/*
+componentWillMount() {
+    navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+            location: default_location
+        });
+    },(error) => this.setState({ location: default_location, error: error.message }),
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+)
+}*/

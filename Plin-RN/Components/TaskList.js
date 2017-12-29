@@ -4,6 +4,7 @@ import {StyleSheet, View} from "react-native";
 
 export default class TaskList extends React.Component {
     render() {
+      
         return (
             <View style={styles.list}>
                 {this.props.tasks.map(function(task){
