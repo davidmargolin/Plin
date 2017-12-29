@@ -21,7 +21,7 @@ public class MainActivity extends ExponentActivity {
 
   @Override
   public String publishedUrl() {
-    return "exp://exp.host/@ericfalchier/plin-rn";
+    return "exp://exp.host/@trickedoutdavid/plin";
   }
 
   @Override

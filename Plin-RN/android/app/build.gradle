@@ -52,26 +52,26 @@ repositories{
 }
 
 dependencies {
-    compile project(':react-native-calendar-events')
-    compile project(':react-native-maps')
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(':react-native-calendar-events')
+  implementation project(':react-native-maps')
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:27.0.1'
-  compile 'com.android.support:multidex:1.0.1'
+  implementation 'com.android.support:appcompat-v7:26.0.1'
+  implementation 'com.android.support:multidex:1.0.1'
 
   
-  compile('host.exp.exponent:expoview:23.0.0@aar') {
+  implementation('host.exp.exponent:expoview:23.0.0@aar') {
     exclude group: 'com.facebook.android', module: 'facebook-android-sdk'
     exclude group: 'com.facebook.android', module: 'audience-network-sdk'
     exclude group: 'io.nlopez.smartlocation', module: 'library'
     transitive = true;
   }
 
-  compile 'com.facebook.android:facebook-android-sdk:4.+'
-  compile('com.facebook.android:audience-network-sdk:4.+') {
+  implementation 'com.facebook.android:facebook-android-sdk:4.+'
+  implementation('com.facebook.android:audience-network-sdk:4.+') {
     exclude module: 'play-services-ads'
   }
-  compile('io.nlopez.smartlocation:library:3.2.11') {
+  implementation('io.nlopez.smartlocation:library:3.2.11') {
     transitive = false
   }
   
