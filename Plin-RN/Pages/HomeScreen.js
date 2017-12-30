@@ -24,16 +24,23 @@ export default class HomeScreen extends React.Component {
         // for calendar, get events for day
         // sort into tasks for events that happen at the same location
         // add pins
-        RNCalendarEvents.authorizationStatus()
+        RNCalendarEvents.authorizeEventStore()
             .then(status => {
-                console.log(status)
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        RNCalendarEvents.findCalendars()
-            .then(calendars => {
-                console.log(calendars)
+                console.log(status);
+                RNCalendarEvents.findCalendars()
+                    .then(calendars => {
+                        console.log(calendars);
+                        RNCalendarEvents.fetchAllEvents('2017-12-20T00:00:00.000Z', '2017-12-30T23:59:59.000Z')
+                            .then(events => {
+                                console.log(events)
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             })
             .catch(error => {
                 console.log(error)
@@ -66,7 +73,7 @@ export default class HomeScreen extends React.Component {
 
 let fake_events = [
     {
-        key: "key1",
+        key: 1,
         coordinate: {latitude: 40.7128, longitude: -74.0060},
         title: "event 1",
         description: "event 1 desc",
@@ -76,7 +83,7 @@ let fake_events = [
             title: '1 Long Task B'
         },]
     },{
-        key: "key2",
+        key: 2,
         coordinate: {latitude: 40.6828, longitude: -74.0000},
         title: "event 2",
         description: "event 2 desc",
@@ -84,7 +91,7 @@ let fake_events = [
             title: '2 Long Task A'
         },]
     },{
-        key: "key3",
+        key: 3,
         coordinate: {latitude: 40.7148, longitude: -74.0080},
         title: "event 3",
         description: "event 3 desc",

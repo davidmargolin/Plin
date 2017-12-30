@@ -8,10 +8,12 @@ export default class Map extends React.Component {
 		return (
             <MapView
                 style={styles.map}
-                region={default_location}>
+                region={default_location}
+            >
                 {this.props.events.map(function(event){
                     return <MapView.Marker
                         key={event.key}
+                        image={require('../Resources/Images/pinmock.png')}
                         coordinate={event.coordinate}
                     >
                         <MapView.Callout
