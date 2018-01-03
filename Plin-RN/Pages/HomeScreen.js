@@ -5,7 +5,6 @@ import Fab from '../Components/Fab'
 import {StyleSheet, View} from "react-native";
 import RNCalendarEvents from 'react-native-calendar-events';
 
-
 export default class HomeScreen extends React.Component {
     // hides navigation bar
 
@@ -15,7 +14,7 @@ export default class HomeScreen extends React.Component {
         this.state = {
             events: fake_events,
             date: 'December 28th, 2017',
-            event: '3 Events Today'
+            selected: fake_events[0]
         };
     }
 
@@ -29,10 +28,10 @@ export default class HomeScreen extends React.Component {
                 console.log(status);
                 RNCalendarEvents.findCalendars()
                     .then(calendars => {
-                        console.log(calendars);
+                        //console.log(calendars);
                         RNCalendarEvents.fetchAllEvents('2017-12-20T00:00:00.000Z', '2017-12-30T23:59:59.000Z')
                             .then(events => {
-                                console.log(events)
+                                //console.log(events)
                             })
                             .catch(error => {
                                 console.log(error)
@@ -51,16 +50,22 @@ export default class HomeScreen extends React.Component {
         this.setState({events: [...this.state.events, new_event]})
     }
 
+    setSelected(event){
+        this.setState({selected: event})
+    }
+
     render() {
 
         return (
             <View style ={styles.container}>
                 <Map
                     events={this.state.events}
+                    changeSelected={(event)=>this.setSelected(event)}
                 />
                 <Toolbar
                     date={this.state.date}
-                    event={this.state.event}
+                    events={this.state.events}
+                    selected={this.state.selected}
                 />
                 <Fab
                     navigation={this.props.navigation}

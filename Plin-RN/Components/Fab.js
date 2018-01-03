@@ -6,6 +6,7 @@ export default class Fab extends React.Component {
         return (
             <FloatingAction
                 actions={fab_actions}
+                buttonColor={"#C0392B"}
                 onPressItem={(name) => {
                     this.props.navigation.navigate('NewEvent', {name: name,
                         adder: this.props.adder})
