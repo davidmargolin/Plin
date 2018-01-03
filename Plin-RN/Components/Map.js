@@ -5,17 +5,45 @@ import TaskList from "./TaskList";
 import { mapStyles } from "./MapStyles";
 
 export default class Map extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            default_location:{
+                latitude: 40.7128,
+                longitude: -74.0060,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+            }
+        };
+    }
+
+    componentWillMount() {
+        navigator.geolocation.getCurrentPosition((position) => {
+            position.coords['latitudeDelta'] = 0.015;
+            position.coords['longitudeDelta'] = 0.015;
+            this.setState({
+                default_location: position.coords
+            });
+            console.log(position.coords)
+        }, (error)=>{
+            console.log(error)
+        },{
+            enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
+        })
+    }
+
 	render() {
 		return (
             <MapView
                 style={styles.map}
-                region={default_location}
+                region={this.state.default_location}
                 customMapStyle={mapStyles}>
-                {this.props.events.map(function(event){
+                {this.props.events.map((event)=>{
                     return <MapView.Marker
                         key={event.key}
                         image={require('../Resources/Images/pinmock.png')}
                         coordinate={event.coordinate}
+                        onPress={(event)=>this.props.changeSelected(event)}
                     >
                         <MapView.Callout
                             tooltip={true}
@@ -31,13 +59,6 @@ export default class Map extends React.Component {
 	}
 }
 
-const default_location = {
-    latitude: 40.7128,
-    longitude: -74.0060,
-    latitudeDelta: 0.015,
-    longitudeDelta: 0.0121,
-};
-
 const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -47,13 +68,4 @@ const styles = StyleSheet.create({
     },
 });
 
-/*
-componentWillMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({
-            location: default_location
-        });
-    },(error) => this.setState({ location: default_location, error: error.message }),
-    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-)
-}*/
+
