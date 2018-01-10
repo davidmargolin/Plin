@@ -1,13 +1,13 @@
 import React from "react";
-import {Text, View, Button, TextInput, StyleSheet} from "react-native";
+import {Text, View, Button, TextInput, StyleSheet } from "react-native";
 
 export default class NewEventScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            event_name: 'Event Name',
-            description: 'Event Description',
-            location: 'Event Location',
+            event_name: '',
+            description: '',
+            location: '',
             latlng: {latitude: 40.6528, longitude: -74.0160}
         };
     }
@@ -31,21 +31,28 @@ export default class NewEventScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Create a new event here:</Text>
+                <Text style={styles.header}>Create a new event here</Text>
                 <TextInput
+                    style={styles.eventInput}
                     onChangeText={(event_name) => this.setState({event_name})}
+                    placeholder="Name"
                     value={this.state.event_name}
                 />
                 <TextInput
+                    style={styles.eventInput}
                     onChangeText={(description) => this.setState({description})}
+                    placeholder="Description"
                     value={this.state.description}
                 />
                 <TextInput
+                    style={styles.eventInput}
                     onChangeText={(location) => this.setState({location})}
+                    placeholder="Location"
                     value={this.state.location}
                 />
                 <Button
-                    title={this.props.navigation.state.params.name}
+                    style={styles.submitEvent}
+                    title="New Event"
                     onPress={()=>this.addEvent()}
                 />
             </View>
@@ -53,9 +60,18 @@ export default class NewEventScreen extends React.Component {
     }
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginTop: 50,
     },
+    header: {
+        textAlign: 'center',
+    },
+    eventInput: {
+        fontSize: 20,
+        height: 100,
+        margin: 50,
+    }
+
 });
