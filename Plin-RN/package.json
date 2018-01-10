@@ -23,6 +23,7 @@
     "react-native-calendar-events": "^1.4.3",
     "react-native-floating-action": "^1.5.0",
     "react-native-maps": "^0.18.3",
+    "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.22"
   }
 }
