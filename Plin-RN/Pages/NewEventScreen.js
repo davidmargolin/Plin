@@ -1,7 +1,9 @@
 import React from "react";
-import {Text, View, Button, TextInput, StyleSheet } from "react-native";
+import {Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
 
 export default class NewEventScreen extends React.Component {
     constructor(props) {
@@ -39,38 +41,45 @@ export default class NewEventScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>Create a new event here</Text>
-                <Button 
-                    style={styles.date}
-                    title={this.state.date ? this.state.date : 'Date'}
-                    onPress={()=>this.showCalender()}
-                />
-                <TextInput
-                    style={styles.eventInput}
-                    onChangeText={(event_name) => this.setState({event_name})}
-                    placeholder="Event Name"
-                    value={this.state.event_name}
-                />
-                <MaterialIcon name="event" size={30} color="#900" />
-                <TextInput
-                    style={styles.eventInput}
-                    onChangeText={(description) => this.setState({description})}
-                    placeholder="Description"
-                    value={this.state.description}
-                />
-                <MaterialIcon name="description" size={30} color="#900" />
-                <TextInput
-                    style={styles.eventInput}
-                    onChangeText={(location) => this.setState({location})}
-                    placeholder="Location"
-                    value={this.state.location}
-                />
-                <EntypoIcon name="location" size={30} color="#900" />
-                <MaterialIcon name="date-range" size={30} color="#900" />
+                <TouchableOpacity onPress={()=>this.showCalender()}>
+                    <Text
+                    style={styles.date}>Date</Text>
+                </TouchableOpacity>
+                <View style={styles.eventSection}>
+                    <TextInput
+                        style={styles.eventInput}
+                        onChangeText={(event_name) => this.setState({event_name})}
+                        placeholder="Event Name"
+                        value={this.state.event_name}
+                        underlineColorAndroid="transparent"
+                    />
+                    <MaterialIcon name="event" size={40} />
+                </View>
+                <View style={styles.eventSection}>
+                    <TextInput
+                        style={styles.eventInput}
+                        onChangeText={(description) => this.setState({description})}
+                        placeholder="Description"
+                        value={this.state.description}
+                        underlineColorAndroid="transparent"
+                    />
+                    <MaterialIcon name="description" size={40} />
+                </View>
+                <View style={styles.eventSection}>
+                    <TextInput
+                        style={styles.eventInput}
+                        onChangeText={(location) => this.setState({location})}
+                        placeholder="Location"
+                        value={this.state.location}
+                        underlineColorAndroid="transparent"
+                    />
+                    <EntypoIcon name="location" size={40} />
+                </View>
                 <Button
-                    style={styles.submitEvent}
-                    title="New Event"
-                    onPress={()=>this.addEvent()}
-                />
+                style={styles.submitEvent}
+                title="New Event"
+                onPress={()=>this.addEvent()}
+            />
             </View>
         );
     }
@@ -79,15 +88,40 @@ export default class NewEventScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 2 / 3,
+        flexDirection: 'column',
         marginTop: 50,
+    },
+    date: {
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: 2,
+        fontSize: 20,
+        textAlign: 'center',
+        width: 50,
     },
     header: {
         textAlign: 'center',
     },
+    eventSection: {
+        borderBottomWidth: 1,
+        borderColor: 'grey',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        height: 50,
+    },
     eventInput: {
+        alignSelf: 'stretch',
+        alignContent: 'stretch',
+        flex: 1,
         fontSize: 20,
-        height: 80,
-        margin: 20,
-    }
-
+        marginLeft: 20,
+        width: window.width,
+    },
+    submitEvent: {
+        position: 'absolute',
+        bottom: 0,
+    },
 });
