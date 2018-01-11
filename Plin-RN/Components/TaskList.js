@@ -8,7 +8,12 @@ export default class TaskList extends React.Component {
         return (
             <View style={styles.list}>
                 {this.props.tasks.map(function(task){
-                    return <TaskItem task={task}/>
+                    return (
+                    <TaskItem
+                        key={task.key}
+                        task={task}
+                    />
+                    )
                 })}
             </View>
         );

@@ -5,37 +5,53 @@ import Fab from '../Components/Fab'
 import {StyleSheet, View} from "react-native";
 import RNCalendarEvents from 'react-native-calendar-events';
 
+
 export default class HomeScreen extends React.Component {
-    // hides navigation bar
 
     constructor(props) {
         super(props);
-        // fake events for testing
         this.state = {
-            events: fake_events,
-            date: 'December 28th, 2017',
-            selected: fake_events[0]
+            events: [],
+            date: today_full,
+            //if not selected, show amount of events. None by default
         };
+    }
+
+    getCoordinates(event){
+        Expo.Location.geocodeAsync(event.location).then(latlng=>{
+            console.log(latlng);
+            event['coordinate'] = latlng[0];
+            event_object['tasks']=[{'key':event_object['id'],'title': event_object['title']}];
+            event_object['key'] = event_object['id'];
+            this.setState({events: [...this.state.events, event]})
+        }).catch(error => {
+            console.log(error)
+        })
     }
 
     componentWillMount(){
         // get all calendars
         // for calendar, get events for day
+        // geocode locations
         // sort into tasks for events that happen at the same location
-        // add pins
+        // update events state
         RNCalendarEvents.authorizeEventStore()
             .then(status => {
                 console.log(status);
                 RNCalendarEvents.findCalendars()
                     .then(calendars => {
                         //console.log(calendars);
-                        RNCalendarEvents.fetchAllEvents('2017-12-20T00:00:00.000Z', '2017-12-30T23:59:59.000Z')
+                        console.log(estdate.toISOString());
+                        RNCalendarEvents.fetchAllEvents(estdate.toISOString().substr(0,10)+'T00:00:00.000Z', estdate.toISOString().substr(0,10)+'T23:59:59.000Z')
                             .then(events => {
-                                //console.log(events)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            });
+                                for (event_object in events)
+                                {
+                                    //TODO: this is very expensive and ugly. needs to at least be cached]
+                                    this.getCoordinates(events[event_object]);
+                                }
+                        }).catch(error => {
+                            console.log(error)
+                        });
                     })
                     .catch(error => {
                         console.log(error);
@@ -50,22 +66,16 @@ export default class HomeScreen extends React.Component {
         this.setState({events: [...this.state.events, new_event]})
     }
 
-    setSelected(event){
-        this.setState({selected: event})
-    }
-
     render() {
 
         return (
             <View style ={styles.container}>
                 <Map
                     events={this.state.events}
-                    changeSelected={(event)=>this.setSelected(event)}
                 />
                 <Toolbar
                     date={this.state.date}
                     events={this.state.events}
-                    selected={this.state.selected}
                 />
                 <Fab
                     navigation={this.props.navigation}
@@ -76,36 +86,12 @@ export default class HomeScreen extends React.Component {
     }
 }
 
-let fake_events = [
-    {
-        key: 1,
-        coordinate: {latitude: 40.7128, longitude: -74.0060},
-        title: "event 1",
-        description: "event 1 desc",
-        tasks: [{
-            title: '1 Task A'
-        },{
-            title: '1 Long Task B'
-        },]
-    },{
-        key: 2,
-        coordinate: {latitude: 40.6828, longitude: -74.0000},
-        title: "event 2",
-        description: "event 2 desc",
-        tasks: [{
-            title: '2 Long Task A'
-        },]
-    },{
-        key: 3,
-        coordinate: {latitude: 40.7148, longitude: -74.0080},
-        title: "event 3",
-        description: "event 3 desc",
-        tasks: [{
-            title: '3 Task A'
-        },]
-    },
-];
+const today = new Date();
+const estdate = new Date(today.setHours(today.getHours()-5));
 
+//TODO: below is prob bad practice
+const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+const today_full = months[today.getMonth()]+' '+today.getDay()+', '+today.getFullYear();
 
 const styles = StyleSheet.create({
     container: {

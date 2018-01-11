@@ -7,8 +7,8 @@ export default class EventList extends React.Component {
             <View style={styles.container}>
                 <FlatList
                     style={styles.list}
-                    data={[{key: 'Event 1'}, {key: 'Event 2'}, {key: 'Event 3'}, {key: 'Event 4'}, {key: 'Event 5'}, {key: 'Event 6'}, {key: 'Event 7'}, {key: 'Event 8'}]}
-                    renderItem={({item}) => <Text style={styles.event_text}>{item.key}</Text>}>
+                    data={this.props.events}
+                    renderItem={({item}) => <Text style={styles.event_text}>{item.title}</Text>}>
                 </FlatList>
             </View>
         )

@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import {MapView} from 'expo';
 import {StyleSheet} from 'react-native';
 import TaskList from "./TaskList";
 import { mapStyles } from "./MapStyles";
@@ -8,12 +8,7 @@ export default class Map extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            default_location:{
-                latitude: 40.7128,
-                longitude: -74.0060,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.0121,
-            }
+            default_location:{},
         };
     }
 
@@ -24,14 +19,12 @@ export default class Map extends React.Component {
             this.setState({
                 default_location: position.coords
             });
-            console.log(position.coords)
         }, (error)=>{
             console.log(error)
         },{
             enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
-        })
+        });
     }
-
 	render() {
 		return (
             <MapView
@@ -39,20 +32,30 @@ export default class Map extends React.Component {
                 region={this.state.default_location}
                 customMapStyle={mapStyles}>
                 {this.props.events.map((event)=>{
-                    return <MapView.Marker
-                        key={event.key}
-                        image={require('../Resources/Images/pinmock.png')}
-                        coordinate={event.coordinate}
-                        onPress={(event)=>this.props.changeSelected(event)}
-                    >
-                        <MapView.Callout
-                            tooltip={true}
-                        >
-                            <TaskList
-                                tasks={event.tasks}
-                            />
-                        </MapView.Callout>
-                    </MapView.Marker>;
+                    // Expo.Location.geocodeAsync(event.location).then(latlng=>{
+                    //     event['coordinate']=latlng[0];
+                    //     if ('coordinate' in event){
+                            return(
+                                <MapView.Marker
+                                    key={event.title}
+                                    image={require('../Resources/Images/pinmock.png')}
+                                    coordinate={event.coordinate}
+                                    //onPress={(event)=>this.props.changeSelected(event)}
+                                >
+                                    <MapView.Callout
+                                        tooltip={true}
+                                    >
+                                        <TaskList
+                                            tasks={event.tasks}
+                                        />
+                                    </MapView.Callout>
+                                </MapView.Marker>
+                            )
+                        // }
+                    // }).catch(error => {
+                    //     console.log(error)
+                    // });
+                    //Expo.Location.geocodeAsync(event.location).then((result)=>result);
                 })}
             </MapView>
 		)
@@ -67,5 +70,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
 
