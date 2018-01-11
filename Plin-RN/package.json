@@ -22,6 +22,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
     "react-native-calendar-events": "^1.4.3",
     "react-native-floating-action": "^1.5.0",
+    "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.22"
   }
 }
