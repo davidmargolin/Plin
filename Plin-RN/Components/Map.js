@@ -32,15 +32,11 @@ export default class Map extends React.Component {
                 region={this.state.default_location}
                 customMapStyle={mapStyles}>
                 {this.props.events.map((event)=>{
-                    // Expo.Location.geocodeAsync(event.location).then(latlng=>{
-                    //     event['coordinate']=latlng[0];
-                    //     if ('coordinate' in event){
                             return(
                                 <MapView.Marker
                                     key={event.title}
                                     image={require('../Resources/Images/pinmock.png')}
                                     coordinate={event.coordinate}
-                                    //onPress={(event)=>this.props.changeSelected(event)}
                                 >
                                     <MapView.Callout
                                         tooltip={true}
@@ -51,11 +47,6 @@ export default class Map extends React.Component {
                                     </MapView.Callout>
                                 </MapView.Marker>
                             )
-                        // }
-                    // }).catch(error => {
-                    //     console.log(error)
-                    // });
-                    //Expo.Location.geocodeAsync(event.location).then((result)=>result);
                 })}
             </MapView>
 		)
