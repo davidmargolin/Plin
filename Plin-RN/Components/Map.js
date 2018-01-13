@@ -25,11 +25,17 @@ export default class Map extends React.Component {
             enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
         });
     }
+
+    onRegionChange(region) {
+        this.setState({ default_location: region });
+    }
+
 	render() {
 		return (
             <MapView
                 style={styles.map}
                 region={this.state.default_location}
+                onRegionChange={(region)=>this.onRegionChange(region)}
                 customMapStyle={mapStyles}>
                 {this.props.events.map((event)=>{
                             return(
