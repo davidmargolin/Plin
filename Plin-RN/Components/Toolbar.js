@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Text,Button} from "react-native";
+import {StyleSheet, View, Text, DatePickerAndroid} from "react-native";
 import EventList from "./EventList";
 import { Constants } from 'expo';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default class Toolbar extends React.Component {
     constructor(props){
@@ -10,24 +11,44 @@ export default class Toolbar extends React.Component {
             show_events: false,
         };
     }
+    async showCalender() {
+        const {action, year, month, day} = await DatePickerAndroid.open({date: this.props.date});
+        if (action !== DatePickerAndroid.dismissedAction) {
+            this.props.change_date(new Date(year, month, day))
+        }
+    }
 
-    _toggle_events(){
+    toggleEvents(){
         this.setState({show_events: !this.state.show_events})
     }
+
+    fullDate(){
+        const dateFormat = require('dateformat');
+        return dateFormat(this.props.date, "mmmm dS, yyyy");
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.top_bar}>
                     <View style={styles.text_view}>
-                        <Text style={styles.date_text}>{this.props.date}</Text>
+                        <Text
+                            style={styles.date_text}
+                            onPress={()=>this.showCalender()}
+                        >{
+                            this.fullDate()
+                        }</Text>
                         <Text style={styles.event_text}>{
-                             (this.props.events.length>1? this.props.events.length+' Events': '1 Event')
+                             (this.props.events.length>0? this.props.events.length>1? this.props.events.length+' Events': '1 Event': 'No Events')
                         }</Text>
                     </View>
                     <View>
-                        <Button
-                            title={"h"}
-                            onPress={()=>this._toggle_events()}
+                        <MaterialIcons.Button
+                            name="list"
+                            size={32}
+                            backgroundColor="#ffffff"
+                            color="#000000"
+                            onPress={()=>this.toggleEvents()}
                         />
                     </View>
                 </View>
@@ -68,4 +89,3 @@ const styles = StyleSheet.create({
         //alignSelf: 'stretch',
     }
 });
-

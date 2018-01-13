@@ -1,7 +1,6 @@
 import React from "react";
-import {Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {Text, View, Button, TextInput, StyleSheet, TouchableOpacity, DatePickerAndroid } from "react-native";
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
 
@@ -33,8 +32,11 @@ export default class NewEventScreen extends React.Component {
         this.props.navigation.goBack();
     }
 
-    showCalender() {
-        //Date Button Going to look for calandar we can show here onPress. 
+    async showCalender() {
+        const {action, year, month, day} = await DatePickerAndroid.open({
+            date: new Date()
+        });
+        console.log(year +' '+ month+ ' ' + day)
     }
 
     render() {
@@ -53,7 +55,7 @@ export default class NewEventScreen extends React.Component {
                         value={this.state.event_name}
                         underlineColorAndroid="transparent"
                     />
-                    <MaterialIcon name="event" size={40} />
+                    <MaterialIcons name="event" size={40} />
                 </View>
                 <View style={styles.eventSection}>
                     <TextInput
@@ -63,7 +65,7 @@ export default class NewEventScreen extends React.Component {
                         value={this.state.description}
                         underlineColorAndroid="transparent"
                     />
-                    <MaterialIcon name="description" size={40} />
+                    <MaterialIcons name="description" size={40} />
                 </View>
                 <View style={styles.eventSection}>
                     <TextInput
@@ -73,7 +75,7 @@ export default class NewEventScreen extends React.Component {
                         value={this.state.location}
                         underlineColorAndroid="transparent"
                     />
-                    <EntypoIcon name="location" size={40} />
+                    <Entypo name="location" size={40} />
                 </View>
                 <Button
                 style={styles.submitEvent}
