@@ -6,7 +6,7 @@ export default class Fab extends React.Component {
         return (
             <FloatingAction
                 actions={fab_actions}
-                buttonColor={"#C0392B"}
+                buttonColor={"#E74C3C"}
                 onPressItem={(name) => {
                     this.props.navigation.navigate('NewEvent', {name: name,
                         adder: this.props.adder})
@@ -16,15 +16,18 @@ export default class Fab extends React.Component {
     }
 }
 
-
 const fab_actions = [
     {
         text: 'New Event',
         name: 'Add Event',
-        position: 1
+        color: '#E74C3C',
+        position: 1,
+        icon: require('../Resources/Images/cal.png')
     },{
         text: 'New Recurring Event',
         name: 'Add Recurring Event',
-        position: 2
+        color: '#E74C3C',
+        position: 2,
+        icon: require('../Resources/Images/cal.png')
     }
 ];
