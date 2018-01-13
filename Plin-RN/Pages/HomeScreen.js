@@ -12,10 +12,15 @@ export default class HomeScreen extends React.Component {
         super(props);
         this.state = {
             events: [],
-            date: today_full,
+            date: new Date(new Date().toLocaleString()),
         };
     }
+
     componentWillMount(){
+        this.getCalEvents()
+    }
+
+    getCalEvents(){
         // get all calendars
         // for calendar, get events for day
         // geocode locations
@@ -24,22 +29,12 @@ export default class HomeScreen extends React.Component {
         Promise.all([
             RNCalendarEvents.authorizeEventStore(),
             RNCalendarEvents.findCalendars(),
-            RNCalendarEvents.fetchAllEvents(estdate.toISOString().substr(0,10)+'T00:00:00.000Z', estdate.toISOString().substr(0,10)+'T23:59:59.000Z')
-        ]).then(results => {
+            RNCalendarEvents.fetchAllEvents(this.state.date.toISOString().substr(0,10)+'T00:00:00.000Z', this.state.date.toISOString().substr(0,10)+'T23:59:59.000Z')
+        ]).then(async results => {
             console.log(results[2]);
-            results[2].map(event => {
-                //getCoordinates(event)
-                Expo.Location.geocodeAsync(event.location).then(latlng=>{
-                    console.log(latlng);
-                    event['coordinate'] = latlng[0];
-                    event['tasks']=[{'key':event['id'],'title': event['title']}];
-                    event['key'] = event['id'];
-                    this.setState({events: [...this.state.events, event]});
-                    console.log(this.state.events)
-                }).catch(error => {
-                    console.log(error)
-                })
-            })
+            for (let event of results[2]){
+                await this.addCoordinates(event)
+            }
         }).catch(err => {
             console.log(err)
         });
@@ -49,8 +44,22 @@ export default class HomeScreen extends React.Component {
         this.setState({events: [...this.state.events, new_event]})
     }
 
-    render() {
+    changeDate(new_date){
+        // reset events for the new date
+        this.setState({date: new_date, events: []});
+        this.getCalEvents()
+    }
 
+    async addCoordinates(event){
+        let response = await Expo.Location.geocodeAsync(event.location);
+        console.log(response);
+        event['coordinate'] = response[0];
+        event['tasks'] = [{'key': event['id'], 'title': event['title']}];
+        event['key'] = event['id'];
+        this.setState({events: [...this.state.events, event]});
+    }
+
+    render() {
         return (
             <View style ={styles.container}>
                 <Map
@@ -59,6 +68,7 @@ export default class HomeScreen extends React.Component {
                 <Toolbar
                     date={this.state.date}
                     events={this.state.events}
+                    change_date={this.changeDate.bind(this)}
                 />
                 <Fab
                     navigation={this.props.navigation}
@@ -68,13 +78,6 @@ export default class HomeScreen extends React.Component {
         );
     }
 }
-
-const today = new Date();
-const estdate = new Date(today.setHours(today.getHours()-5));
-
-//TODO: below is prob bad practice
-const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-const today_full = months[today.getMonth()]+' '+today.getDay()+', '+today.getFullYear();
 
 const styles = StyleSheet.create({
     container: {

@@ -8,7 +8,7 @@ export default class Map extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            default_location:{},
+            default_location:{latitude: 0, longitude: 0, latitudeDelta: 0.015, longitudeDelta: 0.015},
         };
     }
 
