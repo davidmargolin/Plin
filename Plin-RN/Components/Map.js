@@ -8,14 +8,11 @@ export default class Map extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            default_location:{latitude: 0, longitude: 0, latitudeDelta: 0.015, longitudeDelta: 0.015},
+            default_location:{},
         };
-    }
-
-    componentWillMount() {
         navigator.geolocation.getCurrentPosition((position) => {
-            position.coords['latitudeDelta'] = 0.015;
-            position.coords['longitudeDelta'] = 0.015;
+            position.coords['latitudeDelta'] = 0.1;
+            position.coords['longitudeDelta'] = 0.1;
             this.setState({
                 default_location: position.coords
             });
@@ -36,23 +33,26 @@ export default class Map extends React.Component {
                 style={styles.map}
                 region={this.state.default_location}
                 onRegionChange={(region)=>this.onRegionChange(region)}
+                pitchEnabled={false}
                 customMapStyle={mapStyles}>
                 {this.props.events.map((event)=>{
-                            return(
-                                <MapView.Marker
-                                    key={event.title}
-                                    image={require('../Resources/Images/pinmock.png')}
-                                    coordinate={event.coordinate}
+                    if (event.location){
+                        return(
+                            <MapView.Marker
+                                key={event.title}
+                                image={require('../Resources/Images/pinmock.png')}
+                                coordinate={event.coordinate}
+                            >
+                                <MapView.Callout
+                                    tooltip={true}
                                 >
-                                    <MapView.Callout
-                                        tooltip={true}
-                                    >
-                                        <TaskList
-                                            tasks={event.tasks}
-                                        />
-                                    </MapView.Callout>
-                                </MapView.Marker>
-                            )
+                                    <TaskList
+                                        tasks={event.tasks}
+                                    />
+                                </MapView.Callout>
+                            </MapView.Marker>
+                        )
+                    }
                 })}
             </MapView>
 		)
