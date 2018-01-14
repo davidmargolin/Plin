@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, DatePickerAndroid} from "react-native";
 import EventList from "./EventList";
 import { Constants } from 'expo';
 import { MaterialIcons } from '@expo/vector-icons';
+import moment from "moment";
 
 export default class Toolbar extends React.Component {
     constructor(props){
@@ -12,9 +13,9 @@ export default class Toolbar extends React.Component {
         };
     }
     async showCalender() {
-        const {action, year, month, day} = await DatePickerAndroid.open({date: this.props.date});
+        const {action, year, month, day} = await DatePickerAndroid.open({date: this.props.date.toDate()});
         if (action !== DatePickerAndroid.dismissedAction) {
-            this.props.change_date(new Date(year, month, day))
+            this.props.change_date(moment([year, month, day]))
         }
     }
 
@@ -23,15 +24,14 @@ export default class Toolbar extends React.Component {
     }
 
     fullDate(){
-        const dateFormat = require('dateformat');
-        return dateFormat(this.props.date, "mmmm dS, yyyy");
+        return this.props.date.format("MMMM Do YYYY");
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.top_bar}>
-                    <View style={styles.text_view}>
+                    <View>
                         <Text
                             style={styles.date_text}
                             onPress={()=>this.showCalender()}
@@ -42,7 +42,7 @@ export default class Toolbar extends React.Component {
                              (this.props.events.length>0? this.props.events.length>1? this.props.events.length+' Events': '1 Event': 'No Events')
                         }</Text>
                     </View>
-                    <View>
+                    <View style={styles.list_button}>
                         <MaterialIcons.Button
                             name="list"
                             size={32}
@@ -82,10 +82,7 @@ const styles = StyleSheet.create({
     event_text: {
         fontSize: 14,
     },
-    button: {
-        width: 5
-    },
-    text_view:{
-        //alignSelf: 'stretch',
+    list_button: {
+        //justifyContent: 'space-between',
     }
 });

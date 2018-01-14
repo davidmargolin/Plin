@@ -4,7 +4,7 @@ import Toolbar from '../Components/Toolbar'
 import Fab from '../Components/Fab'
 import {StyleSheet, View} from "react-native";
 import RNCalendarEvents from 'react-native-calendar-events';
-
+import moment from "moment";
 
 export default class HomeScreen extends React.Component {
 
@@ -12,11 +12,11 @@ export default class HomeScreen extends React.Component {
         super(props);
         this.state = {
             events: [],
-            date: new Date(new Date().toLocaleString()),
+            date: moment(),
         };
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.getCalEvents()
     }
 
@@ -29,9 +29,8 @@ export default class HomeScreen extends React.Component {
         Promise.all([
             RNCalendarEvents.authorizeEventStore(),
             RNCalendarEvents.findCalendars(),
-            RNCalendarEvents.fetchAllEvents(this.state.date.toISOString().substr(0,10)+'T00:00:00.000Z', this.state.date.toISOString().substr(0,10)+'T23:59:59.000Z')
+            RNCalendarEvents.fetchAllEvents(this.state.date.format().substr(0,10)+'T00:00:00.000Z', this.state.date.format().substr(0,10)+'T23:59:59.000Z')
         ]).then(async results => {
-            console.log(results[2]);
             for (let event of results[2]){
                 await this.addCoordinates(event)
             }
