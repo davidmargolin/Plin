@@ -13,7 +13,7 @@ Android SDK 27 (Build Tools 27.0.3)
 ## Installation
 
 ```sh
-git pull https://github.com/trickedoutdavid/Plin.git
+git clone https://github.com/trickedoutdavid/Plin.git
 ```
 
 ```sh
@@ -21,7 +21,7 @@ cd Plin/Plin-RN
 npm install
 ```
 
-Edit the build.gradle at Plin/Plin-RN/node_modules/react-native-calendar-events to below:
+Edit Plin/Plin-RN/node_modules/react-native-calendar-events/android/build.gradle to match below:
 
 ```gradle
 apply plugin: 'com.android.library'
@@ -47,14 +47,12 @@ dependencies {
 }
 ```
 
-Open Android Studio and rebuild project (Build -> Rebuild Project)
-
 ## Build and Test
 
-Debug: Use Expo XDE to compile and run.
+Debug: 
+- Use Expo XDE to compile and run.
 
 Release: 
-- Requires compile from Android Studio (Build -> Generate Signed APK) and Publish from XDE
 - Replace publish url in Plin/Plin-RN/android/app/src/main/java/com/iter/schedmap/MainActivity.java with your own
 ```java
   @Override
@@ -62,3 +60,5 @@ Release:
     return "exp://exp.host/@trickedoutdavid/plin";  //replace here
   }
 ```
+- Requires compile from Android Studio (Build -> Generate Signed APK) and Publish from XDE
+
