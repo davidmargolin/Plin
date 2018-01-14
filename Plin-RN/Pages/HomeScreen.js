@@ -27,7 +27,6 @@ export default class HomeScreen extends React.Component {
         // sort into tasks for events that happen at the same location
         // update events state
         Promise.all([
-            RNCalendarEvents.authorizeEventStore(),
             RNCalendarEvents.findCalendars(),
             RNCalendarEvents.fetchAllEvents(this.state.date.format().substr(0,10)+'T00:00:00.000Z', this.state.date.format().substr(0,10)+'T23:59:59.000Z')
         ]).then(async results => {
@@ -50,9 +49,11 @@ export default class HomeScreen extends React.Component {
     }
 
     async addCoordinates(event){
-        let response = await Expo.Location.geocodeAsync(event.location);
-        console.log(response);
-        event['coordinate'] = response[0];
+        event['coordinate'] = await Expo.Location.geocodeAsync(event.location).then(function(value) {
+            return value[0]
+        }).catch(function(error) {
+            return {}
+        });
         event['tasks'] = [{'key': event['id'], 'title': event['title']}];
         event['key'] = event['id'];
         this.setState({events: [...this.state.events, event]});
