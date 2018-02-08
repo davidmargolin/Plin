@@ -1,5 +1,6 @@
 <h1><img src="Plin-RN/Resources/Images/app_icon.png" width="64"/>Plin</h1>
 
+Manage your schedule on a map
 
 <img src="Mockups/1.png" width="250"> <img src="Mockups/2.png" width="250">
 
